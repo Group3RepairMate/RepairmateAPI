@@ -1,6 +1,11 @@
 var express = require('express')
 var app = express()
 var fs = require("fs")
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       
+app.use(bodyParser.urlencoded({     
+  extended: true
+})); 
 
 var id = 2
 var user = {
@@ -8,7 +13,8 @@ var user = {
        "email" : "aone@gmail.com",
        "phone_no" : "6578909876",
        "location" : "160,Canon Jackson Dr",
-       "availability" : "both"
+       "availability" : "both",
+       "since" : "20 years"
 }
 
 
@@ -27,10 +33,10 @@ app.get("/garages", function (req, res) {
    })
 })
 
-app.get("/addGarage/:garage", function (req, res) {
+app.post("/addGarage", function (req, res) {
     fs.readFile("garages.json", 'utf8', function (err, data) {
-       data = JSON.parse(data)
-       model = JSON.parse(req.params.garage)
+      data = JSON.parse(data)
+       model = req.body
        model["id"] = data["list"].length + 1
        data["list"].push(model)
        fs.writeFile("garages.json",JSON.stringify(data),function(err){})
