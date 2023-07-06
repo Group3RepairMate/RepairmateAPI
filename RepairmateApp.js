@@ -7,7 +7,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 })); 
 
-var id = 2
 var user = {
        "name" : "A one service",
        "email" : "aone@gmail.com",
